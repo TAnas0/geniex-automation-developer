@@ -33,10 +33,12 @@ It expects the HTTP client to filter out non-product pages. This fails because t
 
 ### Step 1
 *What cookies does it contain?*
-`cf_clearance`, `session_id` and `_cf_bm`.
+- `cf_clearance`: Proves that a user has passed a JS challenge. It is required for Cloudflare [JS detections](https://developers.cloudflare.com/cloudflare-challenges/challenge-types/javascript-detections/).
+- `_cf_bm`: (Note: possibly a typo in the codebase; the standard Cloudflare bot management cookie is `__cf_bm` with a double underscore). This cookie expires after 30 minutes of continuous inactivity by the end user.
+- `session_id`: An application-specific session cookie.
 
 *What is the value of "cf_clearance"?*
-[Interpret value]
+It contains a timestamp and encrypted data (related to the IP address and browser fingerprint) proving the network passed the challenge. [Reference](https://developers.cloudflare.com/fundamentals/reference/policies-compliances/cloudflare-cookies/)
 
 *Which proxy solved it?*
 P-003 got the cf_cleareance cookie
